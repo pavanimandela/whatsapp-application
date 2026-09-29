@@ -1,0 +1,1190 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Messenger</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #d9dbd5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage {
+    height: 100vh;
+    background: #f0f2f5;
+}
+
+.login-header {
+    height: 80px;
+    background: #00a884;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8%;
+}
+
+.login-logo {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.help {
+    font-size: 15px;
+}
+
+.login-card {
+    width: 430px;
+    max-width: 92%;
+    background: white;
+    margin: 50px auto;
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,.12);
+}
+
+.whatsapp-logo {
+    width: 75px;
+    height: 75px;
+    margin: auto;
+    margin-bottom: 20px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 38px;
+}
+
+.login-card h1 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.login-description {
+    color: #667781;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.login-card select,
+.login-card input {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 15px;
+    padding: 0 14px;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+
+.login-card select:focus,
+.login-card input:focus {
+    border-color: #00a884;
+}
+
+.login-btn {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 6px;
+    background: #00a884;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: #008f72;
+}
+
+#error {
+    color: #d93025;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.terms {
+    color: #667781;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.terms a {
+    color: #008069;
+}
+
+/* ================= MESSENGER ================= */
+
+#messengerPage {
+    display: none;
+    height: 100vh;
+}
+
+.app {
+    height: 100vh;
+    max-width: 1500px;
+    margin: auto;
+    display: flex;
+    background: white;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 35%;
+    min-width: 300px;
+    border-right: 1px solid #ddd;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    height: 65px;
+    background: #f0f2f5;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic {
+    width: 42px;
+    height: 42px;
+    background: #25d366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.profile-name {
+    font-weight: bold;
+}
+
+.header-icons {
+    display: flex;
+    gap: 20px;
+    font-size: 21px;
+    color: #54656f;
+}
+
+.search-area {
+    background: #f0f2f5;
+    padding: 8px 12px;
+}
+
+.search-box {
+    height: 38px;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 10px;
+}
+
+.search-box span {
+    color: #667781;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+.chat-list {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.chat {
+    height: 72px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.chat:hover {
+    background: #f5f6f6;
+}
+
+.chat.active {
+    background: #e9edef;
+}
+
+.chat-pic {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    border-radius: 50%;
+    background: #dfe5e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+}
+
+.chat-details {
+    flex: 1;
+    overflow: hidden;
+}
+
+.chat-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-name {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.chat-time {
+    color: #667781;
+    font-size: 11px;
+}
+
+.last-message {
+    color: #667781;
+    font-size: 13px;
+    margin-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* CHAT AREA */
+
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #efeae2;
+    position: relative;
+}
+
+/* Background pattern */
+
+.chat-area::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .05;
+    background-image:
+        radial-gradient(#555 1px, transparent 1px);
+    background-size: 25px 25px;
+    pointer-events: none;
+}
+
+.chat-header {
+    height: 65px;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    gap: 12px;
+    z-index: 2;
+}
+
+.chat-header-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #dfe5e7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.chat-header-info {
+    flex: 1;
+}
+
+.chat-header-name {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.online {
+    color: #667781;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.chat-header-icons {
+    display: flex;
+    gap: 22px;
+    color: #54656f;
+    font-size: 20px;
+}
+
+/* MESSAGES */
+
+.messages {
+    flex: 1;
+    padding: 25px 7%;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.date-label {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.date-label span {
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: 7px;
+    font-size: 11px;
+    color: #667781;
+    box-shadow: 0 1px 1px rgba(0,0,0,.1);
+}
+
+.message {
+    max-width: 65%;
+    margin-bottom: 8px;
+    padding: 7px 9px;
+    border-radius: 7px;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.4;
+    clear: both;
+}
+
+.received {
+    background: white;
+    float: left;
+    border-top-left-radius: 0;
+}
+
+.sent {
+    background: #d9fdd3;
+    float: right;
+    border-top-right-radius: 0;
+}
+
+.message-time {
+    font-size: 10px;
+    color: #667781;
+    margin-left: 8px;
+    float: right;
+    margin-top: 5px;
+}
+
+.tick {
+    color: #53bdeb;
+    margin-left: 3px;
+}
+
+/* MESSAGE INPUT */
+
+.message-input-area {
+    min-height: 62px;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    z-index: 5;
+}
+
+.input-icons {
+    display: flex;
+    gap: 15px;
+    color: #54656f;
+    font-size: 23px;
+}
+
+.message-input {
+    flex: 1;
+    height: 42px;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 14px;
+}
+
+.send-btn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: #00a884;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* EMOJI */
+
+.emoji-picker {
+    display: none;
+    position: absolute;
+    bottom: 70px;
+    left: 15px;
+    width: 280px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0,0,0,.2);
+    z-index: 10;
+}
+
+.emoji-picker span {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* EMPTY */
+
+.empty-chat {
+    display: none;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .chat-area {
+        display: none;
+        width: 100%;
+    }
+
+    .sidebar.mobile-hidden {
+        display: none;
+    }
+
+    .chat-area.mobile-show {
+        display: flex;
+    }
+
+    .back-btn {
+        display: block !important;
+    }
+
+    .message {
+        max-width: 80%;
+    }
+
+    .messages {
+        padding: 20px 4%;
+    }
+}
+
+.back-btn {
+    display: none;
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* LOGIN MOBILE */
+
+@media (max-width: 500px) {
+
+    .login-header {
+        padding: 0 5%;
+        height: 70px;
+    }
+
+    .login-logo {
+        font-size: 23px;
+    }
+
+    .login-card {
+        margin-top: 30px;
+        padding: 30px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+                         LOGIN PAGE
+========================================================= -->
+
+<div id="loginPage">
+
+    <div class="login-header">
+        <div class="login-logo">WhatsApp</div>
+        <div class="help">Help</div>
+    </div>
+
+    <div class="login-card">
+
+        <div class="whatsapp-logo">
+            ☎
+        </div>
+
+        <h1>Enter phone number</h1>
+
+        <p class="login-description">
+            WhatsApp will send an SMS to verify your phone number.
+        </p>
+
+        <select id="country">
+            <option value="+91">India (+91)</option>
+            <option value="+1">United States (+1)</option>
+            <option value="+44">United Kingdom (+44)</option>
+            <option value="+61">Australia (+61)</option>
+            <option value="+81">Japan (+81)</option>
+        </select>
+
+        <input
+            type="tel"
+            id="phone"
+            placeholder="Phone number"
+            maxlength="10"
+        >
+
+        <p id="error"></p>
+
+        <button class="login-btn" onclick="login()">
+            Continue
+        </button>
+
+        <p class="terms">
+            By continuing, you agree to our
+            <a href="#">Terms</a> and
+            <a href="#">Privacy Policy</a>.
+        </p>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+                       MESSENGER PAGE
+========================================================= -->
+
+<div id="messengerPage">
+
+    <div class="app">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <div class="sidebar" id="sidebar">
+
+            <div class="sidebar-header">
+
+                <div class="profile">
+
+                    <div class="profile-pic">
+                        👤
+                    </div>
+
+                    <div class="profile-name">
+                        My Account
+                    </div>
+
+                </div>
+
+                <div class="header-icons">
+                    <span>☰</span>
+                    <span>⋮</span>
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-area">
+
+                <div class="search-box">
+
+                    <span>🔍</span>
+
+                    <input
+                        type="text"
+                        id="search"
+                        placeholder="Search or start new chat"
+                        onkeyup="searchChats()"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- CHAT LIST -->
+
+            <div class="chat-list" id="chatList">
+
+                <div class="chat active"
+                     data-name="John"
+                     onclick="openChat('John','🧑')">
+
+                    <div class="chat-pic">🧑</div>
+
+                    <div class="chat-details">
+
+                        <div class="chat-top">
+                            <span class="chat-name">John</span>
+                            <span class="chat-time">4:25 PM</span>
+                        </div>
+
+                        <div class="last-message">
+                            Hey! How are you?
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat"
+                     data-name="Priya"
+                     onclick="openChat('Priya','👩')">
+
+                    <div class="chat-pic">👩</div>
+
+                    <div class="chat-details">
+
+                        <div class="chat-top">
+                            <span class="chat-name">Priya</span>
+                            <span class="chat-time">3:40 PM</span>
+                        </div>
+
+                        <div class="last-message">
+                            See you tomorrow!
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat"
+                     data-name="Rahul"
+                     onclick="openChat('Rahul','👨')">
+
+                    <div class="chat-pic">👨</div>
+
+                    <div class="chat-details">
+
+                        <div class="chat-top">
+                            <span class="chat-name">Rahul</span>
+                            <span class="chat-time">2:10 PM</span>
+                        </div>
+
+                        <div class="last-message">
+                            Send me the project file.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat"
+                     data-name="Anjali"
+                     onclick="openChat('Anjali','👩‍💻')">
+
+                    <div class="chat-pic">👩‍💻</div>
+
+                    <div class="chat-details">
+
+                        <div class="chat-top">
+                            <span class="chat-name">Anjali</span>
+                            <span class="chat-time">1:30 PM</span>
+                        </div>
+
+                        <div class="last-message">
+                            Thank you 😊
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat"
+                     data-name="Kiran"
+                     onclick="openChat('Kiran','👨‍💻')">
+
+                    <div class="chat-pic">👨‍💻</div>
+
+                    <div class="chat-details">
+
+                        <div class="chat-top">
+                            <span class="chat-name">Kiran</span>
+                            <span class="chat-time">Yesterday</span>
+                        </div>
+
+                        <div class="last-message">
+                            Good morning!
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= CHAT AREA ================= -->
+
+        <div class="chat-area" id="chatArea">
+
+            <div class="chat-header">
+
+                <button class="back-btn"
+                        onclick="backToChats()">
+                    ←
+                </button>
+
+                <div class="chat-header-pic"
+                     id="headerPic">
+                    🧑
+                </div>
+
+                <div class="chat-header-info">
+
+                    <div class="chat-header-name"
+                         id="headerName">
+                        John
+                    </div>
+
+                    <div class="online">
+                        online
+                    </div>
+
+                </div>
+
+                <div class="chat-header-icons">
+                    <span>🔍</span>
+                    <span>⋮</span>
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGES -->
+
+            <div class="messages" id="messages">
+
+                <div class="date-label">
+                    <span>Today</span>
+                </div>
+
+
+                <div class="message received">
+                    Hey! How are you?
+                    <span class="message-time">
+                        4:20 PM
+                    </span>
+                </div>
+
+
+                <div class="message sent">
+                    I'm fine! How are you?
+                    <span class="message-time">
+                        4:21 PM
+                        <span class="tick">✓✓</span>
+                    </span>
+                </div>
+
+
+                <div class="message received">
+                    I'm doing great 😊
+                    <span class="message-time">
+                        4:22 PM
+                    </span>
+                </div>
+
+
+                <div class="message sent">
+                    That's good to hear!
+                    <span class="message-time">
+                        4:23 PM
+                        <span class="tick">✓✓</span>
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- EMOJI PICKER -->
+
+            <div class="emoji-picker" id="emojiPicker">
+
+                <span onclick="addEmoji('😀')">😀</span>
+                <span onclick="addEmoji('😂')">😂</span>
+                <span onclick="addEmoji('😍')">😍</span>
+                <span onclick="addEmoji('😊')">😊</span>
+                <span onclick="addEmoji('😎')">😎</span>
+                <span onclick="addEmoji('❤️')">❤️</span>
+                <span onclick="addEmoji('👍')">👍</span>
+                <span onclick="addEmoji('👏')">👏</span>
+                <span onclick="addEmoji('🎉')">🎉</span>
+                <span onclick="addEmoji('🔥')">🔥</span>
+                <span onclick="addEmoji('🙏')">🙏</span>
+                <span onclick="addEmoji('💯')">💯</span>
+
+            </div>
+
+
+            <!-- MESSAGE INPUT -->
+
+            <div class="message-input-area">
+
+                <div class="input-icons">
+
+                    <span onclick="toggleEmoji()">
+                        😊
+                    </span>
+
+                    <span>
+                        📎
+                    </span>
+
+                </div>
+
+                <input
+                    type="text"
+                    id="messageInput"
+                    class="message-input"
+                    placeholder="Type a message"
+                    onkeypress="handleEnter(event)"
+                >
+
+                <button
+                    class="send-btn"
+                    onclick="sendMessage()">
+                    ➤
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+                         LOGIN
+========================================================= */
+
+function login() {
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const country =
+        document.getElementById("country").value;
+
+    const error =
+        document.getElementById("error");
+
+    error.textContent = "";
+
+    if (phone === "") {
+
+        error.textContent =
+            "Please enter your phone number.";
+
+        return;
+    }
+
+    if (!/^[0-9]+$/.test(phone)) {
+
+        error.textContent =
+            "Phone number must contain only numbers.";
+
+        return;
+    }
+
+    if (country === "+91" && phone.length !== 10) {
+
+        error.textContent =
+            "Please enter a valid 10-digit phone number.";
+
+        return;
+    }
+
+    document.getElementById("loginPage").style.display = "none";
+
+    document.getElementById("messengerPage").style.display = "block";
+}
+
+
+/* =========================================================
+                         OPEN CHAT
+========================================================= */
+
+function openChat(name, emoji) {
+
+    document.getElementById("headerName").textContent = name;
+
+    document.getElementById("headerPic").textContent = emoji;
+
+    document.getElementById("sidebar").classList.add("mobile-hidden");
+
+    document.getElementById("chatArea").classList.add("mobile-show");
+
+    if (window.innerWidth > 700) {
+
+        document.getElementById("sidebar")
+            .classList.remove("mobile-hidden");
+
+        document.getElementById("chatArea")
+            .classList.remove("mobile-show");
+    }
+}
+
+
+/* =========================================================
+                         BACK BUTTON
+========================================================= */
+
+function backToChats() {
+
+    document.getElementById("sidebar")
+        .classList.remove("mobile-hidden");
+
+    document.getElementById("chatArea")
+        .classList.remove("mobile-show");
+}
+
+
+/* =========================================================
+                         SEND MESSAGE
+========================================================= */
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("messageInput");
+
+    const text = input.value.trim();
+
+    if (text === "") {
+        return;
+    }
+
+    const messages =
+        document.getElementById("messages");
+
+    const message =
+        document.createElement("div");
+
+    message.className = "message sent";
+
+    const now = new Date();
+
+    let hours = now.getHours();
+
+    let minutes = now.getMinutes();
+
+    let ampm = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12;
+
+    hours = hours ? hours : 12;
+
+    minutes =
+        minutes < 10 ? "0" + minutes : minutes;
+
+    const time =
+        hours + ":" + minutes + " " + ampm;
+
+    message.innerHTML =
+        text +
+        '<span class="message-time">' +
+        time +
+        ' <span class="tick">✓✓</span>' +
+        '</span>';
+
+    messages.appendChild(message);
+
+    input.value = "";
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+    /* Demo automatic reply */
+
+    setTimeout(function() {
+
+        const reply =
+            document.createElement("div");
+
+        reply.className = "message received";
+
+        reply.innerHTML =
+            "Thanks for your message 😊" +
+            '<span class="message-time">' +
+            getCurrentTime() +
+            '</span>';
+
+        messages.appendChild(reply);
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    }, 1000);
+}
+
+
+/* =========================================================
+                         ENTER KEY
+========================================================= */
+
+function handleEnter(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+    }
+}
+
+
+/* =========================================================
+                         CURRENT TIME
+========================================================= */
+
+function getCurrentTime() {
+
+    const now = new Date();
+
+    let hours = now.getHours();
+
+    let minutes = now.getMinutes();
+
+    let ampm = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12;
+
+    hours = hours ? hours : 12;
+
+    minutes =
+        minutes < 10 ? "0" + minutes : minutes;
+
+    return hours + ":" + minutes + " " + ampm;
+}
+
+
+/* =========================================================
+                         SEARCH CHATS
+========================================================= */
+
+function searchChats() {
+
+    const search =
+        document.getElementById("search")
+            .value
+            .toLowerCase();
+
+    const chats =
+        document.querySelectorAll(".chat");
+
+    chats.forEach(function(chat) {
+
+        const name =
+            chat.getAttribute("data-name")
+                .toLowerCase();
+
+        if (name.includes(search)) {
+
+            chat.style.display = "flex";
+
+        } else {
+
+            chat.style.display = "none";
+        }
+
+    });
+}
+
+
+/* =========================================================
+                         EMOJI
+========================================================= */
+
+function toggleEmoji() {
+
+    const picker =
+        document.getElementById("emojiPicker");
+
+    if (picker.style.display === "block") {
+
+        picker.style.display = "none";
+
+    } else {
+
+        picker.style.display = "block";
+    }
+}
+
+
+function addEmoji(emoji) {
+
+    const input =
+        document.getElementById("messageInput");
+
+    input.value += emoji;
+
+    input.focus();
+
+    document.getElementById("emojiPicker")
+        .style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
+```
+
